@@ -44,7 +44,7 @@ dependencies = [
 # "extras" (e.g. for `pip install .[test]`)
 [project.optional-dependencies]
 # add dependencies used for testing here
-test = ["pytest", "pytest-cov"]
+test = ["pytest", "pytest-cov", "pyarrow"]
 # add anything else you like to have in your dev environment here
 dev = [
     "black",
