@@ -27,3 +27,13 @@ Out[3]:
 4     1    Az     ASN           3  ... -54.239      0       1.0         10.0
 [5 rows x 13 columns]
 ```
+
+## Changelog
+
+### v0.0.2 (20/01/24)
+- added atomic properties to dataframe output
+- added support for `Path` arguments in `mmdf.read()`
+- moved to `pyproject.toml` based packaging
+
+### v0.0.1
+- first release
