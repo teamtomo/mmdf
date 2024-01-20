@@ -1,14 +1,10 @@
 import warnings
 
+import mmdf
+
 with warnings.catch_warnings():
     warnings.simplefilter("ignore", DeprecationWarning)
     import pandas as pd
-
-import mmdf
-
-
-def test_import():
-    pass
 
 
 def test_read(test_pdb_file):
