@@ -6,8 +6,8 @@
 [![CI](https://github.com/teamtomo/mmdf/actions/workflows/ci.yml/badge.svg)](https://github.com/teamtomo/mmdf/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/teamtomo/mmdf/branch/main/graph/badge.svg)](https://codecov.io/gh/teamtomo/mmdf)
 
-**M**acro**M**olecular **D**ata**F**rames (`mmdf`) is a small package for reading macromolecular structure files
-(.pdb/.mmCIF) into pandas dataframes.
+**M**acro**M**olecular **D**ata**F**rames (`mmdf`) is a small package for reading and writing macromolecular structure files
+(.pdb/.mmCIF) using pandas dataframes.
 
 The heavy lifting of reading structure files is performed by [gemmi](https://gemmi.readthedocs.io/en/latest/).
 
@@ -16,6 +16,7 @@ The heavy lifting of reading structure files is performed by [gemmi](https://gem
 ```ipython
 import mmdf
 
+# Read a PDBx/mmCIF file into a dataframe
 df = mmdf.read('4v6x.cif')
 df.head()
 Out[3]: 
@@ -26,6 +27,11 @@ Out[3]:
 3     1    Az     ASN           3  ... -53.007      0       1.0         10.0
 4     1    Az     ASN           3  ... -54.239      0       1.0         10.0
 [5 rows x 13 columns]
+
+# Other dataframe manipulation...
+
+# Write dataframe to a PDBx/mmCIF file
+mmdf.write('4v6x_new.cif', df)
 ```
 
 ## Changelog
