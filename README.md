@@ -36,6 +36,10 @@ mmdf.write('4v6x_new.cif', df)
 
 ## Changelog
 
+### v0.0.3 (12/12/24)
+- added basic write functionality
+- resolved gemmi 0.7.0 incompatibility issues
+
 ### v0.0.2 (20/01/24)
 - added atomic properties to dataframe output
 - added support for `Path` arguments in `mmdf.read()`
