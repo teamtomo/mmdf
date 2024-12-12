@@ -28,7 +28,7 @@ def structure_to_df(structure: gemmi.Structure) -> pd.DataFrame:
     for model in structure:
         data = [
             (
-                model.name,
+                model.num,
                 cra.chain.name,
                 cra.residue.name,
                 cra.residue.seqid.num,
