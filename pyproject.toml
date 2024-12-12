@@ -36,7 +36,7 @@ classifiers = [
 ]
 # add your package dependencies here
 dependencies = [
-    "gemmi",
+    "gemmi==0.7.0",
     "pandas",
 ]
 
