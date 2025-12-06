@@ -6,18 +6,50 @@ import gemmi
 import pandas as pd
 
 from ._gemmi_utils import df_to_structure, structure_to_df
+from ._pdb_utils import fetch_pdb
 
 
-def read(filename: os.PathLike) -> pd.DataFrame:
-    """Read a macromolecular structure file into a pandas DataFrame."""
-    structure = gemmi.read_structure(str(filename))
+def read(file_or_pdb_id: os.PathLike | str) -> pd.DataFrame:
+    """Read a macromolecular structure into a pandas DataFrame.
+
+    Parameters
+    ----------
+    file_or_pdb_id : os.PathLike
+        Path to structure file, or PDB ID in format "pdb:<pdb_id>"
+        (e.g., "pdb:1abc" to download from PDB)
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing structure data
+
+    Examples
+    --------
+    Read from local file:
+    >>> df = mmdf.read("structure.cif")
+
+    Download from PDB (legacy 4-char ID):
+    >>> df = mmdf.read("pdb:1abc")
+
+    Download from PDB (extended 12-char ID):
+    >>> df = mmdf.read("pdb:pdb_00001abc")
+    """
+    filename_str = str(file_or_pdb_id)
+
+    # Check for PDB ID format (case-insensitive)
+    if filename_str.lower().startswith("pdb:"):
+        pdb_id = filename_str[4:].strip()
+        filepath = str(fetch_pdb(pdb_id))
+    else:
+        filepath = filename_str
+
+    structure = gemmi.read_structure(filepath)
     return structure_to_df(structure)
 
 
 def write(
     filename: os.PathLike,
     df: pd.DataFrame,
-    structure_name: str = "",
     pdb_write_options: gemmi.PdbWriteOptions = None,
 ) -> None:
     """Write a pandas DataFrame to a macromolecular structure file.
@@ -26,8 +58,6 @@ def write(
     ----------
     filename (os.PathLike): The file to write the DataFrame to.
     df (pd.DataFrame): The reference DataFrame containing the structure data.
-    structure_name (str): Optional name to assign to the structure. Defaults to
-        an empty string.
     pdb_write_options (gemmi.PdbWriteOptions): Optional PdbWriteOptions object
         to control the output format. See the gemmi documentation for more
         details. Defaults to None.
