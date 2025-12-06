@@ -34,7 +34,18 @@ Out[3]:
 mmdf.write('4v6x_new.cif', df)
 ```
 
+You can also fetch structures by their PDB ID, they will be cached in your home directory.
+
+```python
+import mmdf
+
+df = mmdf.read("pdb:1crn")
+```
+
 ## Changelog
+
+### v0.0.4 (05/12/25)
+- add pdb download functionality
 
 ### v0.0.3 (12/12/24)
 - added basic write functionality

@@ -33,3 +33,13 @@ def test_write(test_pdb_file, test_output_file):
     assert df.equals(df2)
 
     test_output_file.unlink()
+
+def test_read_from_pdb_id():
+    """Test reading with 'pdb:' prefix (lowercase)."""
+    import pytest
+
+    pytest.importorskip("mmdf")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        df = mmdf.read("pdb:1crn")
+    assert isinstance(df, pd.DataFrame)
