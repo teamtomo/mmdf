@@ -51,6 +51,7 @@ def write(
     filename: os.PathLike,
     df: pd.DataFrame,
     pdb_write_options: gemmi.PdbWriteOptions = None,
+    mmcif_write_options: gemmi.MmcifOutputGroups = None,
 ) -> None:
     """Write a pandas DataFrame to a macromolecular structure file.
 
@@ -61,6 +62,9 @@ def write(
     pdb_write_options (gemmi.PdbWriteOptions): Optional PdbWriteOptions object
         to control the output format. See the gemmi documentation for more
         details. Defaults to None.
+    mmcif_write_options: (gemmi.MmcifOutputGroups): Optional MmcifOutputGroups 
+        object to control cif output format. See gemmi documentation for more
+        details. Defaults to None.
 
     Returns
     -------
@@ -68,6 +72,12 @@ def write(
     """
     if pdb_write_options is None:
         pdb_write_options = gemmi.PdbWriteOptions()
+    if mmcif_write_options is None: 
+        mmcif_write_options = gemmi.MmcifOutputGroups()
 
     structure = df_to_structure(df)
-    structure.write_pdb(str(filename), pdb_write_options)
+    if str(filename)[-4:].lower() == '.cif':
+        doc = structure.make_mmcif_document(mmcif_write_options)
+        doc.write_file(str(filename))
+    else:
+        structure.write_pdb(str(filename), pdb_write_options)
