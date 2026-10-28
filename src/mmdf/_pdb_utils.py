@@ -38,7 +38,8 @@ def validate_pdb_id(pdb_id: str) -> str:
 
     Supports both legacy 4-character and extended 12-character formats.
     Legacy format: 4 alphanumeric characters (e.g., "1abc", "7BQR")
-    Extended format: 12 chars = "pdb_" + 8 alphanumeric (e.g., "pdb_00001abc", "pdb_00006UV8")
+    Extended format: 12 chars = "pdb_" + 8 alphanumeric
+    (e.g., "pdb_00001abc", "pdb_00006UV8")
 
     Parameters
     ----------
@@ -78,7 +79,7 @@ def validate_pdb_id(pdb_id: str) -> str:
             )
     elif len(pdb_id) == 12 and pdb_id.startswith("pdb_"):
         # Extended 12-character format: pdb_XXXXXXXX
-        if pdb_id[3] != '_':
+        if pdb_id[3] != "_":
             raise ValueError(
                 f"Invalid PDB ID: '{pdb_id}'. "
                 f"Extended PDB IDs must include underscore: 'pdb_XXXXXXXX'."
@@ -86,7 +87,8 @@ def validate_pdb_id(pdb_id: str) -> str:
         if not pdb_id[4:].isalnum():
             raise ValueError(
                 f"Invalid PDB ID: '{pdb_id}'. "
-                f"Extended PDB IDs must be 'pdb_' followed by 8 alphanumeric characters."
+                f"Extended PDB IDs must be 'pdb_' followed by 8 alphanumeric "
+                f"characters."
             )
     else:
         raise ValueError(
@@ -125,6 +127,8 @@ def download_pdb(pdb_id: str, output_path: Path) -> None:
         tmp_path.rename(output_path)
 
     except urllib.error.HTTPError as e:
+        # HTTPError holds the open response; close it explicitly (Python 3.14+ warns)
+        e.close()
         tmp_path.unlink(missing_ok=True)
         if e.code == 404:
             raise FileNotFoundError(
