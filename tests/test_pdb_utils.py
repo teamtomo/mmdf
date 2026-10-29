@@ -3,9 +3,9 @@
 import pytest
 
 from mmdf._pdb_utils import (
+    fetch_pdb,
     get_cache_dir,
     get_cached_file_path,
-    fetch_pdb,
     validate_pdb_id,
 )
 
@@ -128,6 +128,7 @@ def test_cached_file_exists():
     """Test that if a file exists in cache, it's returned immediately."""
     # Create a fake cached file
     from mmdf._pdb_utils import get_cache_dir
+
     cache_dir = get_cache_dir()
     cached_file = cache_dir / "1abc.cif"
     cached_file.write_text("fake cif content")
