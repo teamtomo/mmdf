@@ -34,6 +34,7 @@ def test_write(test_pdb_file, test_output_file):
 
     test_output_file.unlink()
 
+
 def test_read_from_pdb_id():
     """Test reading with 'pdb:' prefix (lowercase)."""
     import pytest
